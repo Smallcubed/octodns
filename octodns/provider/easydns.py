@@ -242,15 +242,22 @@ class EasyDNSProvider(BaseProvider):
         }
 
     def _data_for_NS(self, _type, records):
-        values = []
-        for record in records:
-            data = '{}'.format(record['rdata'])
-            values.append(data)
-        return {
-            'ttl': records[0]['ttl'],
-            'type': _type,
-            'values': values,
-        }
+        record = records[0]
+        for value in record.values:
+            yield {
+                'ttl': record['ttl'],
+                'type': _type,
+                'value': value
+            }
+        # values = []
+        # for record in records:
+        #     data = '{}'.format(record['rdata'])
+        #     values.append(data)
+        # return {
+        #     'ttl': records[0]['ttl'],
+        #     'type': _type,
+        #     'values': values,
+        # }
 
     def _data_for_SRV(self, _type, records):
         values = []
